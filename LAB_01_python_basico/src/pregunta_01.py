@@ -1,3 +1,5 @@
+import pandas as pd
+
 def pregunta_01():
     """
     Calcule la suma de los valores de la segunda columna (`value`) del
@@ -7,5 +9,19 @@ def pregunta_01():
 
         214
     """
+    data = pd.read_csv(
+        "data/data.csv.gz",
+        compression="gzip",
+        sep="\t",
+        header=None,
+    )
 
-    raise NotImplementedError
+    suma = data[1].sum()
+
+
+    return int(suma)
+
+
+
+if __name__ == "__main__":
+    pregunta_01()

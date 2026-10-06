@@ -4,5 +4,6 @@
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-    "terminal.integrated.gpuAcceleration": "off"
+    "terminal.integrated.gpuAcceleration": "off",
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe"
 }
