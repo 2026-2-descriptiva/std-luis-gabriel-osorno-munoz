@@ -1,3 +1,8 @@
+import pandas as pd
+from pathlib import Path
+
+
+
 def pregunta_11():
     """
     La cuarta columna (`codes`) contiene letras minúsculas separadas por
@@ -10,4 +15,23 @@ def pregunta_11():
         {"a": 122, "b": 49, "c": 91, ...}
     """
 
-    raise NotImplementedError
+    Base_dir = Path(__file__).parent.parent
+
+    archivo = Base_dir / "data" / "data.csv.gz"
+
+    data = pd.read_csv(archivo, header = None, compression="gzip", sep="\t")
+
+    resultados = data[[1, 3]]
+
+    resultados[3] = resultados[3].str.split(",")
+
+    resultados = resultados.explode(3)
+
+    resultados = resultados.groupby(3)[1].sum().to_dict()
+
+    return resultados
+
+
+
+if __name__ == "__main__":
+    print(pregunta_11())
