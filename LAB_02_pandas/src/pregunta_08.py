@@ -1,3 +1,6 @@
+import pandas as pd
+from pathlib import Path
+
 def pregunta_08():
     """
     Retorne la tabla `data/tbl0.tsv` completa con una columna adicional
@@ -12,4 +15,16 @@ def pregunta_08():
         ...
     """
 
-    raise NotImplementedError
+    Base_dir = Path(__file__).parent.parent
+
+    archivo = Base_dir / "data" / "tbl0.tsv"
+
+    data = pd.read_csv(archivo, sep = "\t")
+
+    data["suma"] = data["c0"]+data["c2"]
+
+    return data
+
+
+if __name__ == "__main__":
+    print(pregunta_08())
