@@ -1,3 +1,7 @@
+import pandas as pd
+from pathlib import Path
+import re
+
 def pregunta_01():
     """
     El archivo `data/clusters_report.txt` es un reporte de clústeres de
@@ -26,4 +30,62 @@ def pregunta_01():
         ...
     """
 
-    raise NotImplementedError
+    Base_dir = Path(__file__).parent.parent
+
+    archivo = Base_dir / "data" / "clusters_report.txt"
+
+    registros = []
+
+    cluster_actual = None
+
+    with open(archivo, "r", encoding="utf-8") as file:
+        lineas = file.readlines()
+
+    for linea in lineas[4:]:
+        linea_str = linea.strip()
+        
+        # Saltar líneas vacías
+        if not linea_str:
+            continue
+
+        # Detectar si la línea empieza con datos de un nuevo cluster (un número al inicio)
+        # Regex captura: 1. cluster, 2. cantidad, 3. porcentaje, 4. inicio de palabras clave
+        match = re.match(r"^(\d+)\s+(\d+)\s+([\d,]+)\s*%\s+(.*)$", linea_str)
+
+        if match:
+            # Si ya teníamos acumulado un cluster previo, lo guardamos en la lista
+            if cluster_actual:
+                registros.append(cluster_actual)
+
+            # Extraer las 4 partes
+            cluster, cantidad, porcentaje, palabras = match.groups()
+
+            # Guardar el nuevo cluster en un diccionario
+            cluster_actual = {
+                "cluster": int(cluster),
+                "cantidad_de_palabras_clave": int(cantidad),
+                "porcentaje_de_palabras_clave": float(porcentaje.replace(",", ".")),
+                "principales_palabras_clave": palabras.strip()
+            }
+        else:
+            # Si no empieza con número, es una línea de continuación de palabras clave
+            if cluster_actual:
+                cluster_actual["principales_palabras_clave"] += " " + linea.strip()
+
+    if cluster_actual:
+        registros.append(cluster_actual)
+
+    # 4. Crear el DataFrame inicial a partir de los registros procesados
+    df = pd.DataFrame(registros)
+
+    df["principales_palabras_clave"] = (
+        df["principales_palabras_clave"]
+        .str.replace(r"\s+", " ", regex=True)
+        .str.rstrip(".")
+    )
+    
+    return df
+
+
+if __name__ == "__main__":
+    print(pregunta_01())
