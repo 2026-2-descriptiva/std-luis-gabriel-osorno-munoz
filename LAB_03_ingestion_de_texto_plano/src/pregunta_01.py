@@ -86,6 +86,5 @@ def pregunta_01():
     
     return df
 
-
 if __name__ == "__main__":
     print(pregunta_01())
