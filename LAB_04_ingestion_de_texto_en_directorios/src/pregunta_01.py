@@ -41,7 +41,7 @@ def pregunta_01():
 
     ## Se obtienen las emociones
 
-    emotions_train = [archivo for archivo in os.listdir(rutas_train)]
+    emotions_train = sorted([archivo for archivo in os.listdir(rutas_train)])
 
 
     # Se crea el diccionario para almacenar
@@ -77,7 +77,7 @@ def pregunta_01():
 
     # Definimos las emociones en test
 
-    emociones_test = [archivo for archivo in os.listdir(rutas_test)]
+    emociones_test = sorted([archivo for archivo in os.listdir(rutas_test)])
 
     lista_emotions_test = []
 
