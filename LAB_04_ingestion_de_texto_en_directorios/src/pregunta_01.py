@@ -52,9 +52,11 @@ def pregunta_01():
 
     for emo in emotions_train:
 
-        archivo_train = rutas_train / emo
+        archivo_dir = rutas_train / emo
 
-        for archivo in archivo_train.glob("*"):
+        archivos = sorted([f for f in archivo_dir.glob("*") if f.is_file()], key=lambda f: f.name)
+
+        for archivo in archivos:
 
             texto = archivo.read_text(encoding="utf-8").strip()
 
@@ -85,7 +87,9 @@ def pregunta_01():
 
         archivo_test = rutas_test / emo
 
-        for file in archivo_test.glob("*"):
+        archivos = sorted([f for f in archivo_test.glob("*") if f.is_file()], key=lambda f: f.name)
+
+        for file in archivos:
 
             texto = file.read_text(encoding="utf-8").strip()
 
