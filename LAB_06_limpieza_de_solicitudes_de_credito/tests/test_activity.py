@@ -15,7 +15,6 @@ TEXT_COLUMNS = [
     "línea_credito",
 ]
 
-
 def parse_dates(values):
     dates = pd.to_datetime(values, format="%d/%m/%Y", errors="coerce")
     for date_format in ["%Y-%m-%d", "%Y/%m/%d"]:
