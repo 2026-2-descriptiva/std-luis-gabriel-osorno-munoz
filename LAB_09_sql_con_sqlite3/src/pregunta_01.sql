@@ -21,3 +21,10 @@
 --
 --  Escriba su consulta debajo de esta línea.
 --
+
+SELECT SUM(C12)
+FROM tbl1;
+
+
+
+

@@ -22,3 +22,14 @@
 --
 --  Escriba su consulta debajo de esta línea.
 --
+
+SELECT 
+       SUBSTR(c14, 1, 4) AS YEAR,
+       COUNT(SUBSTR(c14, 1, 4)) AS CANT
+FROM tbl1
+WHERE SUBSTR(c14, 1, 4) = "2018"
+GROUP BY YEAR;
+
+
+
+
